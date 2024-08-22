@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::dpi::Size;
 use crate::event_loop::{ActiveEventLoop, EventLoop, EventLoopBuilder};
 use crate::monitor::MonitorHandle;
-use crate::window::{Window, WindowAttributes};
+use crate::window::{Window as CoreWindow, WindowAttributes};
 
 /// X window type. Maps directly to
 /// [`_NET_WM_WINDOW_TYPE`](https://specifications.freedesktop.org/wm-spec/wm-spec-1.5.html).
@@ -140,7 +140,7 @@ impl EventLoopBuilderExtX11 for EventLoopBuilder {
 /// Additional methods on [`Window`] that are specific to X11.
 pub trait WindowExtX11 {}
 
-impl WindowExtX11 for Window {}
+impl WindowExtX11 for dyn CoreWindow {}
 
 /// Additional methods on [`WindowAttributes`] that are specific to X11.
 pub trait WindowAttributesExtX11 {

@@ -80,6 +80,13 @@ impl WindowExtStartupNotify for dyn Window + '_ {
             return window.request_activation_token();
         }
 
+        #[cfg(x11_platform)]
+        if let Some(window) =
+            self.as_any().downcast_ref::<crate::platform_impl::x11::window::Window>()
+        {
+            return window.request_activation_token();
+        }
+
         Err(NotSupportedError::new())
     }
 }

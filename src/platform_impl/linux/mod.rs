@@ -19,7 +19,11 @@ use self::x11::{X11Error, XConnection, XError, XNotSupported};
 use crate::application::ApplicationHandler;
 pub(crate) use crate::cursor::OnlyCursorImageSource as PlatformCustomCursorSource;
 use crate::dpi::{PhysicalPosition, PhysicalSize};
+#[cfg(x11_platform)]
+use crate::dpi::Size;
 use crate::error::EventLoopError;
+#[cfg(x11_platform)]
+use crate::error::NotSupportedError;
 use crate::event_loop::ActiveEventLoop;
 pub(crate) use crate::icon::RgbaIcon as PlatformIcon;
 use crate::keyboard::Key;

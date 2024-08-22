@@ -1294,27 +1294,6 @@ pub trait Window: AsAny {
     fn rwh_06_window_handle(&self) -> &dyn rwh_06::HasWindowHandle;
 }
 
-// TODO: Not clear how to preserve the queue on main stuff. In general, each backend individually
-// should handle that unless we make our window as not Send + Sync, then the need for it
-// will go away.
-
-// impl Drop for Window {
-//     /// This will close the [`Window`].
-//     ///
-//     /// See [`Window`] for more details.
-//     fn drop(&mut self) {
-// self.window.maybe_wait_on_main(|w| {
-//     // If the window is in exclusive fullscreen, we must restore the desktop
-//     // video mode (generally this would be done on application exit, but
-//     // closing the window doesn't necessarily always mean application exit,
-//     // such as when there are multiple windows)
-//     if let Some(Fullscreen::Exclusive(_)) = w.fullscreen().map(|f| f.into()) {
-//         w.set_fullscreen(None);
-//     }
-// })
-//     }
-// }
-
 impl PartialEq for dyn Window + '_ {
     fn eq(&self, other: &dyn Window) -> bool {
         self.id().eq(&other.id())
