@@ -445,7 +445,7 @@ impl WindowAttributes {
 ///
 /// **Web:** The [`Window`], which is represented by a `HTMLElementCanvas`, can
 /// not be closed by dropping the [`Window`].
-pub trait Window: AsAny {
+pub trait Window: AsAny + Send + Sync {
     /// Create a new [`WindowAttributes`] which allows modifying the window's attributes before
     /// creation.
     fn default_attributes() -> WindowAttributes
@@ -564,7 +564,7 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::window::Window;
     /// # fn swap_buffers() {}
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Do the actual drawing with OpenGL.
     ///
     /// // Notify winit that we're about to submit buffer to the windowing system.
@@ -639,7 +639,7 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalPosition, PhysicalPosition};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the position in logical dimensions like this:
     /// window.set_outer_position(LogicalPosition::new(400.0, 200.0).into());
     ///
@@ -692,12 +692,12 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalSize, PhysicalSize};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the size in logical dimensions like this:
-    /// let _ = window.request_inner_size(LogicalSize::new(400.0, 200.0));
+    /// let _ = window.request_inner_size(LogicalSize::new(400.0, 200.0).into());
     ///
     /// // Or specify the size in physical dimensions like this:
-    /// let _ = window.request_inner_size(PhysicalSize::new(400, 200));
+    /// let _ = window.request_inner_size(PhysicalSize::new(400, 200).into());
     /// # }
     /// ```
     ///
@@ -727,12 +727,12 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalSize, PhysicalSize};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the size in logical dimensions like this:
-    /// window.set_min_inner_size(Some(LogicalSize::new(400.0, 200.0)));
+    /// window.set_min_inner_size(Some(LogicalSize::new(400.0, 200.0).into()));
     ///
     /// // Or specify the size in physical dimensions like this:
-    /// window.set_min_inner_size(Some(PhysicalSize::new(400, 200)));
+    /// window.set_min_inner_size(Some(PhysicalSize::new(400, 200).into()));
     /// # }
     /// ```
     ///
@@ -746,12 +746,12 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalSize, PhysicalSize};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the size in logical dimensions like this:
-    /// window.set_max_inner_size(Some(LogicalSize::new(400.0, 200.0)));
+    /// window.set_max_inner_size(Some(LogicalSize::new(400.0, 200.0).into()));
     ///
     /// // Or specify the size in physical dimensions like this:
-    /// window.set_max_inner_size(Some(PhysicalSize::new(400, 200)));
+    /// window.set_max_inner_size(Some(PhysicalSize::new(400, 200).into()));
     /// # }
     /// ```
     ///
@@ -1011,12 +1011,18 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalPosition, PhysicalPosition, LogicalSize, PhysicalSize};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the position in logical dimensions like this:
-    /// window.set_ime_cursor_area(LogicalPosition::new(400.0, 200.0), LogicalSize::new(100, 100));
+    /// window.set_ime_cursor_area(
+    ///     LogicalPosition::new(400.0, 200.0).into(),
+    ///     LogicalSize::new(100, 100).into(),
+    /// );
     ///
     /// // Or specify the position in physical dimensions like this:
-    /// window.set_ime_cursor_area(PhysicalPosition::new(400, 200), PhysicalSize::new(100, 100));
+    /// window.set_ime_cursor_area(
+    ///     PhysicalPosition::new(400, 200).into(),
+    ///     PhysicalSize::new(100, 100).into(),
+    /// );
     /// # }
     /// ```
     ///
@@ -1149,12 +1155,12 @@ pub trait Window: AsAny {
     /// ```no_run
     /// # use winit::dpi::{LogicalPosition, PhysicalPosition};
     /// # use winit::window::Window;
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// // Specify the position in logical dimensions like this:
-    /// window.set_cursor_position(LogicalPosition::new(400.0, 200.0));
+    /// window.set_cursor_position(LogicalPosition::new(400.0, 200.0).into());
     ///
     /// // Or specify the position in physical dimensions like this:
-    /// window.set_cursor_position(PhysicalPosition::new(400, 200));
+    /// window.set_cursor_position(PhysicalPosition::new(400, 200).into());
     /// # }
     /// ```
     ///
@@ -1172,7 +1178,7 @@ pub trait Window: AsAny {
     ///
     /// ```no_run
     /// # use winit::window::{CursorGrabMode, Window};
-    /// # fn scope(window: &Window) {
+    /// # fn scope(window: &dyn Window) {
     /// window
     ///     .set_cursor_grab(CursorGrabMode::Confined)
     ///     .or_else(|_e| window.set_cursor_grab(CursorGrabMode::Locked))

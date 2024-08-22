@@ -82,7 +82,7 @@ pub trait WindowExtWeb {
 
     /// Returns [`true`] if calling `event.preventDefault()` is enabled.
     ///
-    /// See [`Window::set_prevent_default()`] for more details.
+    /// See [`WindowExtWeb::set_prevent_default()`] for more details.
     fn prevent_default(&self) -> bool;
 
     /// Sets whether `event.preventDefault()` should be called on events on the
@@ -148,7 +148,7 @@ pub trait WindowAttributesExtWeb {
     /// Sets whether `event.preventDefault()` should be called on events on the
     /// canvas that have side effects.
     ///
-    /// See [`Window::set_prevent_default()`] for more details.
+    /// See [`WindowExtWeb::set_prevent_default()`] for more details.
     ///
     /// Enabled by default.
     fn with_prevent_default(self, prevent_default: bool) -> Self;

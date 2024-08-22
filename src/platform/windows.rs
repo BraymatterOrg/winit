@@ -317,7 +317,7 @@ pub trait WindowExtWindows {
     ///
     /// ```no_run
     /// # use winit::window::Window;
-    /// # fn scope(window: Window) {
+    /// # fn scope(window: Box<dyn Window>) {
     /// use std::thread;
     ///
     /// use winit::platform::windows::WindowExtWindows;

@@ -138,6 +138,8 @@ impl EventLoopBuilderExtX11 for EventLoopBuilder {
 }
 
 /// Additional methods on [`Window`] that are specific to X11.
+///
+/// [`Window`]: crate::window::Window
 pub trait WindowExtX11 {}
 
 impl WindowExtX11 for dyn CoreWindow {}
@@ -169,13 +171,13 @@ pub trait WindowAttributesExtX11 {
     ///
     /// ```
     /// # use winit::dpi::{LogicalSize, PhysicalSize};
-    /// # use winit::window::Window;
+    /// # use winit::window::{Window, WindowAttributes};
     /// # use winit::platform::x11::WindowAttributesExtX11;
     /// // Specify the size in logical dimensions like this:
-    /// Window::default_attributes().with_base_size(LogicalSize::new(400.0, 200.0));
+    /// WindowAttributes::default().with_base_size(LogicalSize::new(400.0, 200.0));
     ///
     /// // Or specify the size in physical dimensions like this:
-    /// Window::default_attributes().with_base_size(PhysicalSize::new(400, 200));
+    /// WindowAttributes::default().with_base_size(PhysicalSize::new(400, 200));
     /// ```
     fn with_base_size<S: Into<Size>>(self, base_size: S) -> Self;
 
@@ -184,12 +186,12 @@ pub trait WindowAttributesExtX11 {
     /// # Example
     ///
     /// ```no_run
-    /// use winit::window::Window;
+    /// use winit::window::{Window, WindowAttributes};
     /// use winit::event_loop::ActiveEventLoop;
     /// use winit::platform::x11::{XWindow, WindowAttributesExtX11};
     /// # fn create_window(event_loop: &dyn ActiveEventLoop) -> Result<(), Box<dyn std::error::Error>> {
     /// let parent_window_id = std::env::args().nth(1).unwrap().parse::<XWindow>()?;
-    /// let window_attributes = Window::default_attributes().with_embed_parent_window(parent_window_id);
+    /// let window_attributes = WindowAttributes::default().with_embed_parent_window(parent_window_id);
     /// let window = event_loop.create_window(window_attributes)?;
     /// # Ok(()) }
     /// ```

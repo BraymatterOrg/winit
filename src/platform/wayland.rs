@@ -71,6 +71,8 @@ impl EventLoopBuilderExtWayland for EventLoopBuilder {
 }
 
 /// Additional methods on [`Window`] that are specific to Wayland.
+///
+/// [`Window`]: crate::window::Window
 pub trait WindowExtWayland {}
 
 impl WindowExtWayland for dyn CoreWindow + '_ {}
