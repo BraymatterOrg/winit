@@ -18,9 +18,9 @@ pub(crate) use self::common::xkb::{physicalkey_to_scancode, scancode_to_physical
 use self::x11::{X11Error, XConnection, XError, XNotSupported};
 use crate::application::ApplicationHandler;
 pub(crate) use crate::cursor::OnlyCursorImageSource as PlatformCustomCursorSource;
-use crate::dpi::{PhysicalPosition, PhysicalSize};
 #[cfg(x11_platform)]
 use crate::dpi::Size;
+use crate::dpi::{PhysicalPosition, PhysicalSize};
 use crate::error::EventLoopError;
 #[cfg(x11_platform)]
 use crate::error::NotSupportedError;
