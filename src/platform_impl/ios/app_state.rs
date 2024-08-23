@@ -799,7 +799,7 @@ impl EventLoopWaker {
             let timer = CFRunLoopTimerCreate(
                 ptr::null_mut(),
                 f64::MAX,
-                0.000_000_1,
+                0.005,
                 0,
                 0,
                 wakeup_main_loop,
